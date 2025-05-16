@@ -3,86 +3,78 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Checklist Frota - Login</title>
+  <title>Login Checklist Frota</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
     body {
-      margin: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #111, #333);
-      color: #fff;
+      margin: 0;
+      background: #f0f2f5;
       display: flex;
       flex-direction: column;
       align-items: center;
-      min-height: 100vh;
-      padding: 2rem;
+      padding-top: 60px;
     }
 
     header {
       text-align: center;
-      margin-bottom: 2rem;
+      margin-bottom: 30px;
     }
 
-    header img {
-      max-width: 180px;
-      height: auto;
+    .logo {
+      height: 60px;
+      margin-bottom: 10px;
     }
 
-    header h1 {
-      font-family: Impact, sans-serif;
-      font-size: 2rem;
-      color: #f0f0f0;
-      margin-top: 0.8rem;
+    h1 {
+      font-size: 24px;
+      letter-spacing: 1.5px;
+      color: #333;
+      margin: 0;
+      font-weight: bold;
     }
 
     #loginForm {
-      background: #1f1f1f;
+      background: #fff;
       padding: 2rem;
-      border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-      width: 100%;
-      max-width: 360px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      width: 300px;
     }
 
-    label {
+    label, input {
       display: block;
-      margin-bottom: 0.5rem;
-      font-weight: bold;
+      width: 100%;
+      margin-bottom: 1rem;
     }
 
     input {
-      width: 100%;
       padding: 10px;
-      margin-bottom: 1rem;
-      border: none;
-      border-radius: 5px;
       font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
     }
 
     button {
-      width: 100%;
-      padding: 12px;
-      font-size: 1rem;
       background-color: #007bff;
       color: white;
+      padding: 10px;
       border: none;
+      font-size: 1rem;
       border-radius: 5px;
       cursor: pointer;
-      font-weight: bold;
+      width: 100%;
     }
 
     button:hover {
       background-color: #0056b3;
     }
 
+    /* Modal */
     #painelModal {
       display: none;
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.7);
+      background: rgba(0,0,0,0.6);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -90,32 +82,30 @@
     }
 
     #painelModal > div {
-      background: #fff;
-      color: #000;
+      background: white;
       padding: 2rem;
-      border-radius: 10px;
+      border-radius: 8px;
       text-align: center;
-      max-width: 300px;
+      width: 320px;
+      box-shadow: 0 0 15px #0003;
     }
 
     #painelModal button {
+      width: auto;
       margin: 10px;
       padding: 10px 20px;
       background-color: #28a745;
-      color: white;
-      border: none;
-      border-radius: 5px;
     }
 
     #painelModal button:hover {
-      background-color: #218838;
+      background-color: #1e7e34;
     }
   </style>
 </head>
 <body>
 
   <header>
-    <img src="logo.png" alt="BWI TRADING">
+    <img class="logo" src="https://nathangbs.github.io/checklist-frota/logo.png" alt="Logo BWI Trading" />
     <h1>CHECK-LIST DE FROTA</h1>
   </header>
 
@@ -180,5 +170,6 @@
       window.location.href = 'manutencao.html';
     });
   </script>
+
 </body>
 </html>
