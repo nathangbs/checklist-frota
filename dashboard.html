@@ -3,10 +3,28 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Dashboard - Checklist Frota</title>
+  <title>Dashboard - Escolha o Ambiente</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      text-align: center;
+    }
+    button {
+      font-size: 1.2rem;
+      padding: 1rem 2rem;
+      margin: 1rem;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-  <h1>Bem-vindo ao Painel da Frota!</h1>
+  <h1>Bem-vindo ao Dashboard</h1>
+  <p>Selecione o ambiente que deseja acessar:</p>
+
+  <button id="frotaBtn">Painel de Frota</button>
+  <button id="manutencaoBtn">Painel de Manutenção</button>
+  <br /><br />
   <button id="logoutBtn">Sair</button>
 
   <script type="module">
@@ -17,18 +35,26 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth();
 
-    // Verifica se o usuário está logado
+    // Verifica se está logado, senão volta para login
     onAuthStateChanged(auth, (user) => {
       if (!user) {
-        // Se não estiver logado, volta para login
-        window.location.href = "index.html";
+        window.location.href = 'index.html';
       }
     });
 
-    // Botão de logout
+    // Botões que redirecionam para os respectivos painéis
+    document.getElementById('frotaBtn').addEventListener('click', () => {
+      window.location.href = 'frota.html';  // Página do painel de frota
+    });
+
+    document.getElementById('manutencaoBtn').addEventListener('click', () => {
+      window.location.href = 'manutencao.html';  // Página do painel de manutenção
+    });
+
+    // Logout
     document.getElementById('logoutBtn').addEventListener('click', () => {
       signOut(auth).then(() => {
-        window.location.href = "index.html";
+        window.location.href = 'index.html';
       }).catch((error) => {
         alert('Erro ao sair: ' + error.message);
       });
