@@ -2,10 +2,123 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>Painel - Checklist Frota</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Painel de Checklists</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f0f4f8;
+      display: flex;
+      height: 100vh;
+    }
+
+    aside {
+      width: 200px;
+      background: #fff;
+      border-right: 2px solid #000;
+      padding: 20px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .logo {
+      margin-bottom: 20px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .menu-link {
+      margin-top: 40px;
+      text-align: center;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    main {
+      flex: 1;
+      padding: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+    }
+
+    .card {
+      background: #fff;
+      border: 2px solid #000;
+      padding: 20px;
+      width: 300px;
+      min-height: 200px;
+      box-sizing: border-box;
+    }
+
+    .card h3 {
+      margin-top: 0;
+      font-size: 16px;
+      text-align: center;
+    }
+
+    .item {
+      margin: 10px 0;
+    }
+
+    .status {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 5px;
+    }
+
+    .status span {
+      font-size: 12px;
+    }
+
+    .circle {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .ok { background: #28a745; }
+    .pendente { background: #dc3545; }
+  </style>
 </head>
 <body>
-  <h1>Bem-vindo ao Painel</h1>
-  <p>Usuário logado com sucesso!</p>
+  <aside>
+    <div class="logo">LOGO DA EMPRESA</div>
+    <hr style="width: 80%; margin: 20px 0;">
+    <div class="menu-link">CADASTRAR CHECK-LIST</div>
+  </aside>
+
+  <main>
+    <div class="card" id="aRealizar">
+      <h3>CHECK-LIST A REALIZAR</h3>
+      <div class="item">
+        <strong>BBU1456 - JBW5869 - JBW5548</strong>
+        <div class="status">
+          <span>FROTA PENDENTE</span> <div class="circle pendente"></div>
+          <span>MANUTENÇÃO OK</span> <div class="circle ok"></div>
+        </div>
+      </div>
+      <div class="item">
+        <strong>AFW5415 - FDF5E45 - APD6E89</strong>
+        <div class="status">
+          <span>FROTA PENDENTE</span> <div class="circle pendente"></div>
+          <span>MANUTENÇÃO OK</span> <div class="circle ok"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>CHECK-LIST CONCLUÍDOS</h3>
+    </div>
+
+    <div class="card">
+      <h3>CHECK-LIST REALIZADOS<br>PENDENTES DE SERVIÇO</h3>
+    </div>
+  </main>
 </body>
 </html>
