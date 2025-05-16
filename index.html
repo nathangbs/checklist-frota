@@ -1,147 +1,165 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Login Checklist Frota</title>
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    margin: 2rem;
-    background: #f5f5f5;
-  }
-  #loginForm {
-    max-width: 320px;
-    margin: 0 auto;
-    padding: 1rem;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 0 10px #ccc;
-  }
-  label, input {
-    display: block;
-    width: 100%;
-    margin-bottom: 1rem;
-  }
-  input {
-    padding: 8px;
-    font-size: 1rem;
-    box-sizing: border-box;
-  }
-  button {
-    padding: 10px;
-    font-size: 1rem;
-    width: 100%;
-    cursor: pointer;
-    background-color: #007bff;
-    border: none;
-    color: white;
-    border-radius: 5px;
-  }
-  button:hover {
-    background-color: #0056b3;
-  }
-
-  /* Modal */
-  #painelModal {
-    display:none;
-    position: fixed;
-    top:0; left:0; right:0; bottom:0;
-    background: rgba(0,0,0,0.6);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    z-index: 9999;
-  }
-  #painelModal > div {
-    background: white;
-    padding: 2rem;
-    border-radius: 8px;
-    text-align: center;
-    width: 320px;
-    box-shadow: 0 0 15px #0003;
-  }
-  #painelModal button {
-    width: auto;
-    margin: 10px;
-    padding: 10px 20px;
-    background-color: #28a745;
-  }
-  #painelModal button:hover {
-    background-color: #1e7e34;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login - Checklist</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      background: #f0f2f5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    header {
+      margin-bottom: 20px;
+    }
+    header img {
+      width: 200px;
+    }
+    #loginForm {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 300px;
+    }
+    #loginForm label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #333;
+    }
+    #loginForm input {
+      width: 100%;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    #loginForm button {
+      width: 100%;
+      padding: 0.75rem;
+      background-color: #007bff;
+      border: none;
+      color: #fff;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    #loginForm button:hover {
+      background-color: #0056b3;
+    }
+    #painelModal {
+      display: none;
+      position: fixed;
+      top:0; left:0; right:0; bottom:0;
+      background: rgba(0,0,0,0.6);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      z-index: 9999;
+    }
+    #painelModal > div {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 8px;
+      text-align: center;
+      width: 320px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    }
+    #painelModal button {
+      width: 100%;
+      padding: 0.75rem;
+      margin: 0.5rem 0;
+      background-color: #28a745;
+      border: none;
+      color: #fff;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    #painelModal button:hover {
+      background-color: #1e7e34;
+    }
+  </style>
 </head>
 <body>
 
-<h1>Login Checklist Frota</h1>
+  <header>
+    <img src="https://potencial.net.br/logo.svg" alt="Potencial Tecnologia">
+  </header>
 
-<form id="loginForm">
-  <label for="email">Email:</label>
-  <input type="email" id="email" placeholder="seu@email.com" required />
+  <form id="loginForm">
+    <label for="email">Email:</label>
+    <input type="email" id="email" placeholder="seu@email.com" required />
 
-  <label for="senha">Senha:</label>
-  <input type="password" id="senha" placeholder="Senha" required />
+    <label for="senha">Senha:</label>
+    <input type="password" id="senha" placeholder="Senha" required />
 
-  <button type="submit">Entrar</button>
-</form>
+    <button type="submit">Entrar</button>
+  </form>
 
-<!-- Modal de escolha do painel -->
-<div id="painelModal">
-  <div>
-    <h2>Escolha o Painel</h2>
-    <button id="btnFrota">PAINEL FROTA</button>
-    <button id="btnManutencao">PAINEL MANUTENÇÃO</button>
+  <!-- Modal de escolha do painel -->
+  <div id="painelModal">
+    <div>
+      <h2>Escolha o Painel</h2>
+      <button id="btnFrota">PAINEL FROTA</button>
+      <button id="btnManutencao">PAINEL MANUTENÇÃO</button>
+    </div>
   </div>
-</div>
 
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-  import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyCte0cRbPuoZioxTgDSg6eJ3c1TC3SEvPs",
-    authDomain: "checklist-frota-a4b3b.firebaseapp.com",
-    projectId: "checklist-frota-a4b3b",
-    storageBucket: "checklist-frota-a4b3b.firebasestorage.app",
-    messagingSenderId: "428306058067",
-    appId: "1:428306058067:web:1f610791e68c5d75ecefa6"
-  };
+    const firebaseConfig = {
+      apiKey: "AIzaSyCte0cRbPuoZioxTgDSg6eJ3c1TC3SEvPs",
+      authDomain: "checklist-frota-a4b3b.firebaseapp.com",
+      projectId: "checklist-frota-a4b3b",
+      storageBucket: "checklist-frota-a4b3b.firebasestorage.app",
+      messagingSenderId: "428306058067",
+      appId: "1:428306058067:web:1f610791e68c5d75ecefa6"
+    };
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
 
-  const loginForm = document.getElementById('loginForm');
-  const painelModal = document.getElementById('painelModal');
+    const loginForm = document.getElementById('loginForm');
+    const painelModal = document.getElementById('painelModal');
 
-  // Esconder modal no carregamento da página
-  painelModal.style.display = 'none';
+    // Esconder modal no carregamento da página
+    painelModal.style.display = 'none';
 
-  loginForm.addEventListener('submit', (e) => {
-    e.preventDefault();
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
 
-    const email = document.getElementById('email').value;
-    const senha = document.getElementById('senha').value;
+      const email = document.getElementById('email').value;
+      const senha = document.getElementById('senha').value;
 
-    signInWithEmailAndPassword(auth, email, senha)
-      .then(() => {
-        // Login sucesso - mostrar modal e esconder formulário
-        painelModal.style.display = 'flex';
-        loginForm.style.display = 'none';
-      })
-      .catch((error) => {
-        alert('Erro no login: ' + error.message);
-      });
-  });
+      signInWithEmailAndPassword(auth, email, senha)
+        .then(() => {
+          // Login sucesso - mostrar modal e esconder formulário
+          painelModal.style.display = 'flex';
+          loginForm.style.display = 'none';
+        })
+        .catch((error) => {
+          alert('Erro no login: ' + error.message);
+        });
+    });
 
-  document.getElementById('btnFrota').addEventListener('click', () => {
-    window.location.href = 'frota.html';
-  });
+    document.getElementById('btnFrota').addEventListener('click', () => {
+      window.location.href = 'frota.html';
+    });
 
-  document.getElementById('btnManutencao').addEventListener('click', () => {
-    window.location.href = 'manutencao.html';
-  });
-</script>
+    document.getElementById('btnManutencao').addEventListener('click', () => {
+      window.location.href = 'manutencao.html';
+    });
+  </script>
 
 </body>
 </html>
