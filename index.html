@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -7,38 +7,33 @@
 </head>
 <body>
   <h1>Login</h1>
-  <form id="login-form">
-    <label for="email">Email:</label><br />
-    <input type="email" id="email" required /><br />
-    <label for="password">Senha:</label><br />
-    <input type="password" id="password" required /><br />
+  <form id="loginForm">
+    <input type="email" id="email" placeholder="Email" required />
+    <input type="password" id="password" placeholder="Senha" required />
     <button type="submit">Entrar</button>
   </form>
-  <p id="message"></p>
 
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
     import { firebaseConfig } from './firebase-config.js';
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    const form = document.getElementById('login-form');
-    const message = document.getElementById('message');
+    const form = document.getElementById('loginForm');
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
 
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const email = form.email.value;
-      const password = form.password.value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
 
       try {
-        await signInWithEmailAndPassword(auth, email, password);
-        message.textContent = 'Login realizado com sucesso!';
-        // Redirecionar para painel.html (ou página que desejar)
-        window.location.href = './painel.html';
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        // Login bem-sucedido, redirecionar
+        window.location.href = './dashboard.html'; // ou sua página após login
       } catch (error) {
-        message.textContent = 'Erro no login: ' + error.message;
+        alert('Erro no login: ' + error.message);
       }
     });
   </script>
