@@ -3,95 +3,120 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Login - Checklist</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <title>Checklist Frota - Login</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: 'Roboto', sans-serif;
       margin: 0;
-      background: #f0f2f5;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #111, #333);
+      color: #fff;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      height: 100vh;
-    }
-    header {
-      margin-bottom: 20px;
-    }
-    header img {
-      width: 200px;
-    }
-    #loginForm {
-      background: #fff;
+      min-height: 100vh;
       padding: 2rem;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      width: 300px;
     }
-    #loginForm label {
+
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    header img {
+      max-width: 180px;
+      height: auto;
+    }
+
+    header h1 {
+      font-family: Impact, sans-serif;
+      font-size: 2rem;
+      color: #f0f0f0;
+      margin-top: 0.8rem;
+    }
+
+    #loginForm {
+      background: #1f1f1f;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+      width: 100%;
+      max-width: 360px;
+    }
+
+    label {
       display: block;
       margin-bottom: 0.5rem;
-      color: #333;
+      font-weight: bold;
     }
-    #loginForm input {
+
+    input {
       width: 100%;
-      padding: 0.5rem;
+      padding: 10px;
       margin-bottom: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    #loginForm button {
-      width: 100%;
-      padding: 0.75rem;
-      background-color: #007bff;
       border: none;
-      color: #fff;
-      border-radius: 4px;
+      border-radius: 5px;
       font-size: 1rem;
-      cursor: pointer;
     }
-    #loginForm button:hover {
+
+    button {
+      width: 100%;
+      padding: 12px;
+      font-size: 1rem;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
       background-color: #0056b3;
     }
+
     #painelModal {
       display: none;
       position: fixed;
-      top:0; left:0; right:0; bottom:0;
-      background: rgba(0,0,0,0.6);
-      display:flex;
-      align-items:center;
-      justify-content:center;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
       z-index: 9999;
     }
+
     #painelModal > div {
       background: #fff;
+      color: #000;
       padding: 2rem;
-      border-radius: 8px;
+      border-radius: 10px;
       text-align: center;
-      width: 320px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      max-width: 300px;
     }
+
     #painelModal button {
-      width: 100%;
-      padding: 0.75rem;
-      margin: 0.5rem 0;
+      margin: 10px;
+      padding: 10px 20px;
       background-color: #28a745;
+      color: white;
       border: none;
-      color: #fff;
-      border-radius: 4px;
-      font-size: 1rem;
-      cursor: pointer;
+      border-radius: 5px;
     }
+
     #painelModal button:hover {
-      background-color: #1e7e34;
+      background-color: #218838;
     }
   </style>
 </head>
 <body>
 
   <header>
-    <img src="logo.png" alt="Grupo Potencial">
+    <img src="logo.png" alt="BWI TRADING">
+    <h1>CHECK-LIST DE FROTA</h1>
   </header>
 
   <form id="loginForm">
@@ -104,7 +129,6 @@
     <button type="submit">Entrar</button>
   </form>
 
-  <!-- Modal de escolha do painel -->
   <div id="painelModal">
     <div>
       <h2>Escolha o Painel</h2>
@@ -132,9 +156,6 @@
     const loginForm = document.getElementById('loginForm');
     const painelModal = document.getElementById('painelModal');
 
-    // Esconder modal no carregamento da página
-    painelModal.style.display = 'none';
-
     loginForm.addEventListener('submit', (e) => {
       e.preventDefault();
 
@@ -143,7 +164,6 @@
 
       signInWithEmailAndPassword(auth, email, senha)
         .then(() => {
-          // Login sucesso - mostrar modal e esconder formulário
           painelModal.style.display = 'flex';
           loginForm.style.display = 'none';
         })
@@ -160,6 +180,5 @@
       window.location.href = 'manutencao.html';
     });
   </script>
-
 </body>
 </html>
