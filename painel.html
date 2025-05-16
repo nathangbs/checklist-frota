@@ -2,8 +2,8 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Painel de Checklists</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Painel Principal</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -53,6 +53,7 @@
       width: 300px;
       min-height: 200px;
       box-sizing: border-box;
+      cursor: pointer;
     }
 
     .card h3 {
@@ -90,26 +91,30 @@
   <aside>
     <div class="logo">LOGO DA EMPRESA</div>
     <hr style="width: 80%; margin: 20px 0;">
-    <div class="menu-link">CADASTRAR CHECK-LIST</div>
+    <div class="menu-link" id="cadastrarChecklist">CADASTRAR CHECK-LIST</div>
   </aside>
 
   <main>
     <div class="card" id="aRealizar">
       <h3>CHECK-LIST A REALIZAR</h3>
-      <div class="item">
+
+      <!-- Exemplo estático, futuramente carregue via JS da base -->
+      <div class="item" data-conjunto="BBU1456 - JBW5869 - JBW5548">
         <strong>BBU1456 - JBW5869 - JBW5548</strong>
         <div class="status">
           <span>FROTA PENDENTE</span> <div class="circle pendente"></div>
           <span>MANUTENÇÃO OK</span> <div class="circle ok"></div>
         </div>
       </div>
-      <div class="item">
+
+      <div class="item" data-conjunto="AFW5415 - FDF5E45 - APD6E89">
         <strong>AFW5415 - FDF5E45 - APD6E89</strong>
         <div class="status">
           <span>FROTA PENDENTE</span> <div class="circle pendente"></div>
           <span>MANUTENÇÃO OK</span> <div class="circle ok"></div>
         </div>
       </div>
+
     </div>
 
     <div class="card">
@@ -120,5 +125,36 @@
       <h3>CHECK-LIST REALIZADOS<br>PENDENTES DE SERVIÇO</h3>
     </div>
   </main>
+
+  <script>
+    // Recupera o tipo do usuário do localStorage
+    const tipoUsuario = localStorage.getItem('tipoUsuario');
+
+    // Captura os itens do checklist a realizar
+    const itens = document.querySelectorAll('#aRealizar .item');
+
+    itens.forEach(item => {
+      item.style.cursor = 'pointer';
+
+      item.addEventListener('click', () => {
+        const conjunto = item.getAttribute('data-conjunto');
+
+        if (tipoUsuario === 'frota') {
+          // Redireciona para checklist frota, passando o conjunto como parâmetro
+          window.location.href = `checklist-frota.html?conjunto=${encodeURIComponent(conjunto)}`;
+        } else if (tipoUsuario === 'manutencao') {
+          // Redireciona para checklist manutenção
+          window.location.href = `checklist-manutencao.html?conjunto=${encodeURIComponent(conjunto)}`;
+        } else {
+          alert('Tipo de usuário desconhecido.');
+        }
+      });
+    });
+
+    // Exemplo: ação para cadastrar checklist
+    document.getElementById('cadastrarChecklist').addEventListener('click', () => {
+      alert('Funcionalidade de cadastrar checklist ainda não implementada.');
+    });
+  </script>
 </body>
 </html>
