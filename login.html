@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login</title>
+</head>
+<body>
+  <h1>Login</h1>
+
+  <form id="loginForm">
+    <label>Email:<br />
+      <input type="email" id="email" required />
+    </label><br /><br />
+
+    <label>Senha:<br />
+      <input type="password" id="senha" required />
+    </label><br /><br />
+
+    <button type="submit">Entrar</button>
+  </form>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCte0cRbPuoZioxTgDSg6eJ3c1TC3SEvPs",
+      authDomain: "checklist-frota-a4b3b.firebaseapp.com",
+      projectId: "checklist-frota-a4b3b",
+      storageBucket: "checklist-frota-a4b3b.appspot.com",
+      messagingSenderId: "428306058067",
+      appId: "1:428306058067:web:1f610791e68c5d75ecefa6"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const form = document.getElementById('loginForm');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const email = document.getElementById('email').value.trim();
+      const senha = document.getElementById('senha').value;
+
+      try {
+        const userCredential = await signInWithEmailAndPassword(auth, email, senha);
+        const uid = userCredential.user.uid;
+
+        const docRef = doc(db, "usuarios", uid);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          const dados = docSnap.data();
+          const tipo = dados.tipo;
+
+          if (tipo === "frota") {
+            window.location.href = "frota.html";
+          } else if (tipo === "manutencao") {
+            window.location.href = "manutencao.html";
+          } else if (tipo === "admin") {
+            window.location.href = "painel.html";
+          } else {
+            alert("Tipo de usuário inválido.");
+          }
+        } else {
+          alert("Dados do usuário não encontrados.");
+        }
+      } catch (error) {
+        alert("Erro no login: " + error.message);
+      }
+    });
+  </script>
+</body>
+</html>
