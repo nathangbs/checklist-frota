@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard - Checklist Frota</title>
+</head>
+<body>
+  <h1>Bem-vindo ao Painel da Frota!</h1>
+  <button id="logoutBtn">Sair</button>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+    import { firebaseConfig } from './firebase-config.js';
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth();
+
+    // Verifica se o usuário está logado
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        // Se não estiver logado, volta para login
+        window.location.href = "index.html";
+      }
+    });
+
+    // Botão de logout
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      signOut(auth).then(() => {
+        window.location.href = "index.html";
+      }).catch((error) => {
+        alert('Erro ao sair: ' + error.message);
+      });
+    });
+  </script>
+</body>
+</html>
