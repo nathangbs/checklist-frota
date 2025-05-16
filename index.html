@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -7,35 +7,40 @@
 </head>
 <body>
   <h1>Login</h1>
-  <form id="loginForm">
-    <input type="email" id="email" placeholder="Email" required />
-    <input type="password" id="password" placeholder="Senha" required />
-    <button type="submit">Entrar</button>
-  </form>
+
+  <input type="email" id="email" placeholder="Email" required />
+  <br /><br />
+  <input type="password" id="senha" placeholder="Senha" required />
+  <br /><br />
+  <button onclick="login()">Entrar</button>
 
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
     import { firebaseConfig } from './firebase-config.js';
 
     const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
+    const auth = getAuth();
 
-    const form = document.getElementById('loginForm');
-    form.addEventListener('submit', async (event) => {
-      event.preventDefault();
-
+    window.login = function() {
       const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
+      const senha = document.getElementById('senha').value;
 
-      try {
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        // Login bem-sucedido, redirecionar
-        window.location.href = './dashboard.html'; // ou sua página após login
-      } catch (error) {
-        alert('Erro no login: ' + error.message);
+      if (!email || !senha) {
+        alert('Por favor, preencha email e senha.');
+        return;
       }
-    });
+
+      signInWithEmailAndPassword(auth, email, senha)
+        .then((userCredential) => {
+          // Login bem-sucedido
+          alert('Login realizado com sucesso!');
+          window.location.href = 'painel.html'; // Altere para a página que quer direcionar
+        })
+        .catch((error) => {
+          alert('Erro ao fazer login: ' + error.message);
+        });
+    };
   </script>
 </body>
 </html>
