@@ -3,44 +3,142 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Checklist Frota - Login</title>
+  <title>Login Checklist Frota</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2rem;
+      background: #f5f5f5;
+    }
+    #loginForm {
+      max-width: 320px;
+      margin: 0 auto;
+      padding: 1rem;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 0 10px #ccc;
+    }
+    label, input {
+      display: block;
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+    input {
+      padding: 8px;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+    button {
+      padding: 10px;
+      font-size: 1rem;
+      width: 100%;
+      cursor: pointer;
+      background-color: #007bff;
+      border: none;
+      color: white;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Modal */
+    #painelModal {
+      display:none;
+      position: fixed;
+      top:0; left:0; right:0; bottom:0;
+      background: rgba(0,0,0,0.6);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      z-index: 9999;
+    }
+    #painelModal > div {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      text-align: center;
+      width: 320px;
+      box-shadow: 0 0 15px #0003;
+    }
+    #painelModal button {
+      width: auto;
+      margin: 10px;
+      padding: 10px 20px;
+      background-color: #28a745;
+    }
+    #painelModal button:hover {
+      background-color: #1e7e34;
+    }
+  </style>
 </head>
 <body>
-  <h1>Login</h1>
 
-  <input type="email" id="email" placeholder="Email" required />
-  <br /><br />
-  <input type="password" id="senha" placeholder="Senha" required />
-  <br /><br />
-  <button onclick="login()">Entrar</button>
+  <h1>Login Checklist Frota</h1>
+
+  <form id="loginForm">
+    <label for="email">Email:</label>
+    <input type="email" id="email" placeholder="seu@email.com" required />
+
+    <label for="senha">Senha:</label>
+    <input type="password" id="senha" placeholder="Senha" required />
+
+    <button type="submit">Entrar</button>
+  </form>
+
+  <!-- Modal de escolha do painel -->
+  <div id="painelModal">
+    <div>
+      <h2>Escolha o Painel</h2>
+      <button id="btnFrota">PAINEL FROTA</button>
+      <button id="btnManutencao">PAINEL MANUTENÇÃO</button>
+    </div>
+  </div>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
-    import { firebaseConfig } from './firebase-config.js';
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCte0cRbPuoZioxTgDSg6eJ3c1TC3SEvPs",
+      authDomain: "checklist-frota-a4b3b.firebaseapp.com",
+      projectId: "checklist-frota-a4b3b",
+      storageBucket: "checklist-frota-a4b3b.firebasestorage.app",
+      messagingSenderId: "428306058067",
+      appId: "1:428306058067:web:1f610791e68c5d75ecefa6"
+    };
 
     const app = initializeApp(firebaseConfig);
-    const auth = getAuth();
+    const auth = getAuth(app);
 
-    window.login = function() {
+    const loginForm = document.getElementById('loginForm');
+    const painelModal = document.getElementById('painelModal');
+
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
       const email = document.getElementById('email').value;
       const senha = document.getElementById('senha').value;
 
-      if (!email || !senha) {
-        alert('Por favor, preencha email e senha.');
-        return;
-      }
-
       signInWithEmailAndPassword(auth, email, senha)
-        .then((userCredential) => {
-          // Login bem-sucedido
-          alert('Login realizado com sucesso!');
-          window.location.href = 'painel.html'; // Altere para a página que quer direcionar
+        .then(() => {
+          // Login sucesso - mostra modal de escolha
+          painelModal.style.display = 'flex';
+          loginForm.style.display = 'none';  // esconde o form
         })
         .catch((error) => {
-          alert('Erro ao fazer login: ' + error.message);
+          alert('Erro no login: ' + error.message);
         });
-    };
+    });
+
+    document.getElementById('btnFrota').addEventListener('click', () => {
+      window.location.href = 'frota.html'; // altere para sua página do painel de frota
+    });
+
+    document.getElementById('btnManutencao').addEventListener('click', () => {
+      window.location.href = 'manutencao.html'; // altere para sua página do painel de manutenção
+    });
   </script>
+
 </body>
 </html>
