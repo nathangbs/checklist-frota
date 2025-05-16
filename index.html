@@ -5,19 +5,54 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Login Checklist Frota</title>
   <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    * {
+      box-sizing: border-box;
       margin: 0;
-      background: #f0f2f5;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding-top: 60px;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow: hidden;
+    }
+
+    .background {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      z-index: -3;
+      animation: fadeImages 12s infinite alternate;
+    }
+
+    @keyframes fadeImages {
+      0%   { background-image: url('bwt.jpg'); }
+      100% { background-image: url('jeta.jpg'); }
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      z-index: -2;
+    }
+
+    .sombra-topo {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: -1;
     }
 
     header {
       text-align: center;
-      margin-bottom: 30px;
+      margin-top: 60px;
     }
 
     .logo {
@@ -26,19 +61,20 @@
     }
 
     h1 {
-      font-size: 24px;
-      letter-spacing: 1.5px;
-      color: #333;
-      margin: 0;
-      font-weight: bold;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 36px;
+      letter-spacing: 2px;
+      color: white;
+      text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
     }
 
     #loginForm {
       background: #fff;
       padding: 2rem;
       border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
       width: 300px;
+      margin: 30px auto;
     }
 
     label, input {
@@ -100,8 +136,13 @@
       background-color: #1e7e34;
     }
   </style>
+
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 </head>
 <body>
+  <div class="background"></div>
+  <div class="overlay"></div>
+  <img src="sombra_topo.png" alt="Sombra Topo" class="sombra-topo">
 
   <header>
     <img class="logo" src="https://nathangbs.github.io/checklist-frota/logo.png" alt="Logo BWI Trading" />
@@ -169,6 +210,5 @@
       window.location.href = 'manutencao.html';
     });
   </script>
-
 </body>
 </html>
