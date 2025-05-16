@@ -5,114 +5,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Login Checklist Frota</title>
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html, body {
-      height: 100%;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      overflow: hidden;
-    }
-
-    .background {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      background-size: cover;
-      background-position: center;
-      z-index: -3;
-      animation: fadeImages 6s infinite alternate;
-    }
-
-    @keyframes fadeImages {
-      0%   { background-image: url('bwt.jpg'); }
-      100% { background-image: url('jeta.jpg'); }
-    }
-
-    .overlay {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.6);
-      z-index: -2;
-    }
-
-    .sombra-topo {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: -1;
-    }
-
-    header {
-      text-align: center;
-      margin-top: 60px;
-    }
-
-    .logo {
-      height: 100px;
-      margin-bottom: 10px;
-    }
-
-    h1 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 36px;
-      letter-spacing: 2px;
-      color: white;
-      text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
-    }
-
-    #loginForm {
-      background: rgba(255, 255, 255, 0.50);
-      padding: 2rem;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      width: 300px;
-      margin: 30px auto;
-    }
-
-    label, input {
-      display: block;
-      width: 100%;
-      margin-bottom: 1rem;
-      font-weight: bold;
-    }
-
-    input {
-      padding: 10px;
-      font-size: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-
-    button {
-      background-color: #007bff;
-      color: white;
-      padding: 10px;
-      border: none;
-      font-size: 1rem;
-      border-radius: 5px;
-      cursor: pointer;
-      width: 100%;
-    }
-
-    button:hover {
-      background-color: #0056b3;
-    }
+    /* Seu CSS atual aqui (mesmo do seu código) */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; overflow: hidden; }
+    .background { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; z-index: -3; animation: fadeImages 6s infinite alternate; }
+    @keyframes fadeImages { 0% { background-image: url('bwt.jpg'); } 100% { background-image: url('jeta.jpg'); } }
+    .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); z-index: -2; }
+    .sombra-topo { position: absolute; top: 0; left: 0; width: 100%; z-index: -1; }
+    header { text-align: center; margin-top: 60px; }
+    .logo { height: 100px; margin-bottom: 10px; }
+    h1 { font-family: 'Bebas Neue', sans-serif; font-size: 36px; letter-spacing: 2px; color: white; text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8); }
+    #loginForm { background: rgba(255, 255, 255, 0.50); padding: 2rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); width: 300px; margin: 30px auto; }
+    label, input { display: block; width: 100%; margin-bottom: 1rem; font-weight: bold; }
+    input { padding: 10px; font-size: 1rem; border: 1px solid #ccc; border-radius: 5px; }
+    button { background-color: #007bff; color: white; padding: 10px; border: none; font-size: 1rem; border-radius: 5px; cursor: pointer; width: 100%; }
+    button:hover { background-color: #0056b3; }
   </style>
-
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="background"></div>
   <div class="overlay"></div>
-  <img src="sombra_topo.png" alt="Sombra Topo" class="sombra-topo">
+  <img src="sombra_topo.png" alt="Sombra Topo" class="sombra-topo" />
 
   <header>
     <img class="logo" src="https://nathangbs.github.io/checklist-frota/logo.png" alt="Logo BWI Trading" />
@@ -132,6 +46,7 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyCte0cRbPuoZioxTgDSg6eJ3c1TC3SEvPs",
@@ -144,22 +59,41 @@
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
+    const db = getFirestore(app);
 
     const loginForm = document.getElementById('loginForm');
 
-    loginForm.addEventListener('submit', (e) => {
+    loginForm.addEventListener('submit', async (e) => {
       e.preventDefault();
 
       const email = document.getElementById('email').value;
       const senha = document.getElementById('senha').value;
 
-      signInWithEmailAndPassword(auth, email, senha)
-        .then(() => {
-          window.location.href = 'painel.html'; // redirecionamento direto
-        })
-        .catch((error) => {
-          alert('Erro no login: ' + error.message);
-        });
+      try {
+        const userCredential = await signInWithEmailAndPassword(auth, email, senha);
+        const user = userCredential.user;
+
+        // Buscar dados do usuário no Firestore (coleção usuarios, doc ID = uid)
+        const userDocRef = doc(db, 'usuarios', user.uid);
+        const userDocSnap = await getDoc(userDocRef);
+
+        if (userDocSnap.exists()) {
+          const userData = userDocSnap.data();
+          console.log('Usuário logado, dados:', userData);
+
+          // Aqui você pode salvar o tipo no sessionStorage/localStorage se quiser usar depois no painel
+          sessionStorage.setItem('userTipo', userData.tipo);
+
+          // Redirecionar para o painel
+          window.location.href = 'painel.html';
+        } else {
+          alert('Usuário não encontrado no banco de dados Firestore!');
+          // Opcional: deslogar usuário?
+          auth.signOut();
+        }
+      } catch (error) {
+        alert('Erro no login: ' + error.message);
+      }
     });
   </script>
 </body>
