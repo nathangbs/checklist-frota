@@ -105,37 +105,6 @@
     button:hover {
       background-color: #0056b3;
     }
-
-    /* Modal */
-    #painelModal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.6);
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-    }
-
-    #painelModal > div {
-      background: white;
-      padding: 2rem;
-      border-radius: 8px;
-      text-align: center;
-      width: 320px;
-      box-shadow: 0 0 15px #0003;
-    }
-
-    #painelModal button {
-      width: auto;
-      margin: 10px;
-      padding: 10px 20px;
-      background-color: #28a745;
-    }
-
-    #painelModal button:hover {
-      background-color: #1e7e34;
-    }
   </style>
 
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
@@ -160,14 +129,6 @@
     <button type="submit">Entrar</button>
   </form>
 
-  <div id="painelModal">
-    <div>
-      <h2>Escolha o Painel</h2>
-      <button id="btnFrota">PAINEL FROTA</button>
-      <button id="btnManutencao">PAINEL MANUTENÇÃO</button>
-    </div>
-  </div>
-
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
@@ -185,7 +146,6 @@
     const auth = getAuth(app);
 
     const loginForm = document.getElementById('loginForm');
-    const painelModal = document.getElementById('painelModal');
 
     loginForm.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -195,20 +155,11 @@
 
       signInWithEmailAndPassword(auth, email, senha)
         .then(() => {
-          painelModal.style.display = 'flex';
-          loginForm.style.display = 'none';
+          window.location.href = 'painel.html'; // redirecionamento direto
         })
         .catch((error) => {
           alert('Erro no login: ' + error.message);
         });
-    });
-
-    document.getElementById('btnFrota').addEventListener('click', () => {
-      window.location.href = 'frota.html';
-    });
-
-    document.getElementById('btnManutencao').addEventListener('click', () => {
-      window.location.href = 'manutencao.html';
     });
   </script>
 </body>
